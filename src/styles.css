@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Satoshi-Variable";
+  src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@import "tailwindcss";
+@plugin "tailwindcss-primeui";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Satoshi-Variable", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  @apply bg-white dark:bg-black relative min-h-dvh font-sans font-normal antialiased;
+}
+
+button {
+  @apply [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0;
+}
