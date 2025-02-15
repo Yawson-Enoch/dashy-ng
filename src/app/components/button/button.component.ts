@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Sun, Moon, LucideAngularModule } from 'lucide-angular';
 import { ThemeService } from '../../services/theme.service';
@@ -16,4 +16,13 @@ export class ButtonComponent {
   protected readonly MoonIcon = Moon;
 
   themeService = inject(ThemeService);
+
+  constructor() {
+    effect(() => {
+      console.log([
+        this.themeService.theme(),
+        this.themeService.resolvedTheme(),
+      ]);
+    });
+  }
 }
