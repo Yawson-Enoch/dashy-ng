@@ -11,15 +11,150 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+@theme inline {
   --font-sans: "Satoshi-Variable", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --color-background: var(--background);
+  --color-foreground: var(--foregorund);
+
+  --color-surface1: var(--surface1);
+  --color-surface2: var(--surface2);
+  --color-surface3: var(--surface3);
+  --color-surface4: var(--surface4);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --radius-xs: calc(var(--radius) * 0.5);
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: calc(var(--radius) * 0.9);
+  --radius-lg: calc(var(--radius) * 1);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 3);
 }
 
-body {
-  @apply bg-white dark:bg-black relative min-h-dvh font-sans font-normal antialiased;
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    --background: oklch(99.2% 0.0016 285.9);
+    --foregorund: oklch(24.5% 0.0116 285.9);
+
+    --primary: oklch(0% 0 0);
+    --primary-foreground: oklch(100% 0 0);
+
+    --surface1: oklch(95.6% 0.0051 285.9);
+    --surface2: oklch(93.2% 0.0067 285.9);
+    --surface3: oklch(90.9% 0.0087 285.9);
+
+    --muted: var(--surface1);
+    --muted-foreground: oklch(50.5% 0.0138 285.9);
+  }
+
+  .dark {
+    --background: oklch(0% 0.0035 285.9);
+    --foregorund: oklch(94.9% 0.0021 285.9);
+
+    --primary: oklch(100% 0 0);
+    --primary-foreground: oklch(0% 0 0);
+
+    --surface1: oklch(24% 0.0045 285.9);
+    --surface2: oklch(27.7% 0.0062 285.9);
+    --surface3: oklch(31% 0.0073 285.9);
+
+    --muted: oklch(18.5% 0.0033 285.9);
+    --muted-foreground: oklch(77% 0.0114 285.9);
+  }
 }
 
-button {
-  @apply [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0;
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border, currentColor);
+  }
+
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+  }
+
+  body {
+    @apply font-normal bg-background font-sans text-foreground antialiased;
+  }
+
+  p,
+  li,
+  figcaption {
+    @apply text-pretty max-w-prose;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply scroll-m-12 tracking-tight text-balance;
+  }
+  h1 {
+    @apply text-4xl font-extrabold lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+  h4 {
+    @apply text-xl font-semibold;
+  }
+
+  svg {
+    @apply size-5 shrink-0;
+  }
+
+  button,
+  .btn {
+    @apply font-medium text-sm;
+  }
+
+  .dashboard-container {
+    display: grid;
+    grid-template-areas:
+      "aside header header"
+      "aside main main"
+      "aside main main"
+      "aside footer footer";
+    grid-auto-columns: auto 1fr;
+    grid-auto-rows: auto 1fr auto;
+  }
+
+  .dashboard-header {
+    grid-area: header;
+  }
+
+  .dashboard-aside {
+    grid-area: aside;
+  }
+
+  .dashboard-main {
+    grid-area: main;
+  }
+
+  .dashboard-footer {
+    grid-area: footer;
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 1024px;
 }

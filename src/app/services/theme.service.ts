@@ -5,16 +5,25 @@ import { computed, effect, Injectable, signal } from '@angular/core';
 })
 export class ThemeService {
   private readonly storageKey = 'theme';
-  private readonly defaultTheme = 'dark';
+  private readonly defaultTheme = 'light';
+  private readonly MEDIA = '(prefers-color-scheme: dark)';
 
   private getStoredTheme() {
     return localStorage.getItem(this.storageKey) || this.defaultTheme;
   }
 
   private getSystemTheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+    return window.matchMedia(this.MEDIA).matches ? 'dark' : 'light';
+  }
+
+  private applyTheme(newTheme: string) {
+    const currentTheme =
+      newTheme === 'system' ? this.getSystemTheme() : newTheme;
+
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(currentTheme);
+    root.style.colorScheme = currentTheme;
   }
 
   theme = signal(this.getStoredTheme());
@@ -29,24 +38,37 @@ export class ThemeService {
   }
 
   constructor() {
-    effect(() => {
-      const root = window.document.documentElement;
+    effect((onCleanup) => {
+      /* local storage event handling */
+      const handleStorage = (e: StorageEvent) => {
+        if (e.key !== this.storageKey) {
+          return;
+        }
 
-      root.classList.remove('light', 'dark');
+        if (!e.newValue) {
+          this.theme.set(this.defaultTheme); // set default theme on localstorage deletion
+        } else {
+          this.theme.set(e.newValue);
+        }
+      };
+      window.addEventListener('storage', handleStorage);
 
-      if (this.theme() === 'system') {
-        const systemTheme = this.getSystemTheme();
+      /* media query event handling */
+      const media = window.matchMedia(this.MEDIA);
+      const handleMediaQuery = () => {
+        if (this.theme() === 'system') {
+          this.applyTheme('system');
+        }
+      };
+      media.addEventListener('change', handleMediaQuery);
 
-        /* class not set directly with `.className` to prevent other non-theme class overrides 
-        - also theme classes are removed before adding to prevent duplicates
-        */
-        root.classList.add(systemTheme);
-        root.style.colorScheme = systemTheme;
-        return;
-      }
+      /* run on theme changes */
+      this.applyTheme(this.theme());
 
-      root.classList.add(this.theme());
-      root.style.colorScheme = this.theme();
+      onCleanup(() => {
+        window.removeEventListener('storage', handleStorage);
+        media.removeEventListener('change', handleMediaQuery);
+      });
     });
   }
 }

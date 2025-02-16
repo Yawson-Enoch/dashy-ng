@@ -1,0 +1,84 @@
+<div class="grid min-h-dvh md:grid-cols-2">
+  <div
+    class="relative before:absolute before:left-0 before:top-[-450px] before:-z-10 before:h-[1000px] before:w-[100px] before:rounded-full before:bg-primary/15 before:blur-3xl before:content-[''] max-md:hidden before:-rotate-50"
+  >
+    <div
+      class="container flex size-full flex-col items-center justify-center text-center relative"
+    >
+      <a routerLink="/">
+        <img src="/logo.png" alt="DashyNg Logo" class="size-44 lg:size-64" />
+      </a>
+      <h1
+        class="mt-8 w-fit bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent leading-normal"
+      >
+        DashyNg
+      </h1>
+      <p class="mt-2 text-muted-foreground">
+        A simple tool to keep tasks organized.
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="container flex flex-col items-center justify-center md:bg-surface1 dark:md:bg-muted"
+  >
+    <h2>Welcome to DashyNg</h2>
+
+    @if (isLoggedIn()) {
+    <div class="mt-8 space-y-6">
+      <p class="text-center text-muted-foreground">
+        Logged in as
+        <span class="font-semibold text-foreground"> {{ testName() }}</span>
+      </p>
+
+      <div
+        class="mx-auto md:grid w-full md:grid-cols-2 md:gap-x-4 flex flex-col-reverse gap-y-4"
+      >
+        <button pButton severity="secondary" (click)="handleLogout()">
+          <span pButtonLabel>Logout</span>
+        </button>
+        <a routerLink="/dashboard" class="p-button btn bg-primary"
+          >Go to dashboard</a
+        >
+      </div>
+    </div>
+    } @else {
+    <form
+      [formGroup]="profileForm"
+      class="mx-auto mt-8 w-full max-w-72 space-y-6"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="space-y-1">
+        <p-floatlabel variant="on">
+          <input
+            appInputTrim
+            pInputText
+            id="username"
+            type="text"
+            formControlName="username"
+            autocomplete="off"
+            class="w-full"
+          />
+          <label for="username">Enter your name</label>
+        </p-floatlabel>
+        @if(username.invalid && (username.dirty || username.touched)){
+        <p class="text-(--p-red-400)">
+          @if(username.hasError('required')){ Name is required }
+          @if(username.hasError('minlength')){ Name must be at least
+          {{ username.errors!["minlength"].requiredLength }} characters long }
+        </p>
+        }
+      </div>
+      <button
+        pButton
+        fluid="true"
+        [disabled]="
+          profileForm.invalid && (profileForm.dirty || profileForm.touched)
+        "
+      >
+        <span pButtonLabel>Login</span>
+      </button>
+    </form>
+    }
+  </div>
+</div>

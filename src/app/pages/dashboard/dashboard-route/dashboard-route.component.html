@@ -1,0 +1,17 @@
+<header class="flex gap-x-4">
+  <a
+    routerLink="."
+    routerLinkActive="underline"
+    [routerLinkActiveOptions]="{ exact: true }"
+    ariaCurrentWhenActive="page"
+    >Dashboard</a
+  >
+  <a
+    routerLink="tasks"
+    routerLinkActive="underline"
+    ariaCurrentWhenActive="page"
+    >Tasks</a
+  >
+</header>
+<router-outlet />
+<footer>this is the footer</footer>
