@@ -1,1 +1,100 @@
-<p>dashboard-tasks works!</p>
+@let tasks = [{title: 'um', description: '', isCompleted: true}];
+
+<div class="container relative">
+  <p class="text-xl capitalize md:text-2xl">Hey, gybex</p>
+
+  @if(tasks.length === 0){
+  <p class="mt-4 max-w-screen-md md:mt-8">You are free today!</p>
+  } @else {
+  <ul class="mt-4 max-w-screen-md space-y-4 md:mt-8">
+    @for(task of tasks; track task.title){
+    <li
+      class="grid grid-cols-[auto_1fr_auto] items-center gap-x-4 rounded-xl bg-muted/65 p-4"
+    >
+      <p-checkbox [(ngModel)]="task.isCompleted" [binary]="true" />
+
+      <p [ngClass]="['truncate', task.isCompleted ? 'line-through' : '']">
+        {{ task.title }}
+      </p>
+
+      <div class="group flex items-center gap-x-2">
+        <p-button type="button" icon="true" variant="text">
+          <lucide-icon [name]="TrashIcon" />
+        </p-button>
+        <p-button
+          type="button"
+          icon="true"
+          variant="text"
+          (click)="toggleEditingTask()"
+        >
+          <lucide-icon [name]="PencilIcon" />
+        </p-button>
+      </div>
+    </li>
+    }
+  </ul>
+  }
+
+  <!-- task dialog form -->
+  <div class="card flex justify-center">
+    <p-button
+      type="button"
+      icon="true"
+      class="fixed bottom-[20vh] right-4 lg:right-[17vw]"
+      (click)="showDialog()"
+    >
+      <lucide-icon [name]="PlusIcon" />
+    </p-button>
+    <p-dialog
+      [header]="editingTask() ? 'Edit task' : 'Add new task'"
+      [modal]="true"
+      [(visible)]="dialogVisible"
+      styleClass="w-[min(100%,400px)]"
+    >
+      <form [formGroup]="taskForm" (ngSubmit)="submitTask()">
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <input
+              fluid
+              pInputText
+              autocomplete="off"
+              placeholder="Enter title"
+              formControlName="title"
+            />
+            @if(title.invalid && (title.dirty || title.touched)){
+            <p class="text-(--p-red-400)">
+              @if(title.hasError('required')){ Title is required }
+              @if(title.hasError('minlength')){ Title must be at least
+              {{ title.errors!["minlength"].requiredLength }} characters long }
+            </p>
+            }
+          </div>
+          <div class="space-y-1">
+            <input
+              fluid
+              pInputText
+              autocomplete="off"
+              placeholder="Enter description"
+              formControlName="description"
+            />
+            @if(description.invalid && (description.dirty ||
+            description.touched)){
+            <p class="text-(--p-red-400)">
+              @if(description.hasError('minlength')){ Description must be at
+              least
+              {{ description.errors!["minlength"].requiredLength }} characters
+              long }
+            </p>
+            }
+          </div>
+        </div>
+        <div class="mt-8 flex justify-end">
+          <p-button
+            [label]="editingTask() ? 'Edit task' : 'Add task'"
+            type="submit"
+          />
+        </div>
+      </form>
+    </p-dialog>
+  </div>
+</div>
