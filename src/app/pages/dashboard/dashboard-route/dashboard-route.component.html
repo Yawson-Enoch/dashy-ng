@@ -1,17 +1,207 @@
-<header class="flex gap-x-4">
-  <a
-    routerLink="."
-    routerLinkActive="underline"
-    [routerLinkActiveOptions]="{ exact: true }"
-    ariaCurrentWhenActive="page"
-    >Dashboard</a
+@let themes = ['light', 'dark', 'system'];
+<!--  -->
+@let links = [ { to: '.', label: 'Dashboard', icon: GaugeIcon, exact: true }, {
+to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
+
+<div class="dashboard-container min-h-dvh pr-4 max-lg:pl-4">
+  <header class="dashboard-header sticky top-0 py-4 pb-8 z-30">
+    <div
+      class="flex h-16 items-center justify-between rounded-xl px-4 bg-muted"
+    >
+      <!-- mobile nav toggler -->
+      <div class="card flex justify-center lg:hidden">
+        <p-drawer [(visible)]="isDrawerOpen" [closable]="true">
+          <ng-template #header>
+            <a
+              routerLink="."
+              class="flex h-10 items-center w-fit"
+              (click)="isDrawerOpen = false"
+            >
+              <img
+                alt="DashyNg Logo"
+                src="/logo.png"
+                class="aspect-square h-full truncate rounded-full bg-muted object-cover object-center italic text-muted-foreground"
+              />
+              <p
+                class="ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent"
+              >
+                DashyNg
+              </p>
+            </a>
+          </ng-template>
+          <ul class="mt-8 flex min-w-full flex-col gap-y-4">
+            @for(link of links; track link.to) {
+            <li>
+              <a
+                class="grid gap-0 grid-cols-[auto_1fr] h-10 justify-items-start p-2 text-muted-foreground p-button p-button-secondary p-button-text"
+                [routerLinkActiveOptions]="{ exact: !!link.exact }"
+                [routerLink]="link.to"
+                routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
+                ariaCurrentWhenActive="page"
+                (click)="isDrawerOpen = false"
+              >
+                <lucide-icon [name]="link.icon" />
+                <p class="ml-4">
+                  {{ link.label }}
+                </p>
+              </a>
+            </li>
+            }
+          </ul>
+          <ng-template #footer>
+            <button
+              pButton
+              label="Logout"
+              class="w-full justify-start"
+              severity="danger"
+              text
+              (click)="isDrawerOpen = false"
+            >
+              <lucide-icon [name]="LogOutIcon" />
+            </button>
+          </ng-template>
+        </p-drawer>
+        <p-button
+          type="button"
+          icon="true"
+          variant="text"
+          (click)="isDrawerOpen = true"
+        >
+          <lucide-icon [name]="PanelRightCloseIcon" />
+        </p-button>
+      </div>
+
+      <!-- sidebar toggler -->
+      <p-button
+        type="button"
+        icon="true"
+        variant="text"
+        (onClick)="handleSidebarToggle()"
+        class="max-lg:hidden"
+      >
+        <lucide-icon
+          [name]="
+            isSidebarCollapsed() ? PanelRightCloseIcon : PanelLeftCloseIcon
+          "
+        />
+      </p-button>
+
+      <!-- theme toggler -->
+      <div>
+        <p-button
+          type="button"
+          icon="true"
+          variant="text"
+          (onClick)="toggle($event)"
+        >
+          <lucide-icon
+            [name]="resolvedTheme() === 'light' ? MoonIcon : SunIcon"
+          />
+        </p-button>
+        <p-popover #op styleClass="after:hidden before:hidden">
+          <ul class="flex flex-col min-w-28">
+            @for(theme of themes; track theme){
+            <li
+              class="flex items-center gap-2 px-3 py-2 hover:bg-emphasis cursor-pointer rounded-border"
+              (click)="handleTheme(theme)"
+            >
+              {{ theme }}
+            </li>
+            }
+          </ul>
+        </p-popover>
+      </div>
+    </div>
+  </header>
+  <aside
+    class="dashboard-aside sticky top-0 max-h-dvh overflow-hidden p-4 pr-8 max-lg:hidden"
   >
-  <a
-    routerLink="tasks"
-    routerLinkActive="underline"
-    ariaCurrentWhenActive="page"
-    >Tasks</a
-  >
-</header>
-<router-outlet />
-<footer>this is the footer</footer>
+    <div
+      [ngClass]="[
+        'flex h-full flex-col items-center rounded-xl p-4 transition-[width] duration-300 ease-in-out bg-muted',
+        isSidebarCollapsed() ? 'w-16' : 'w-60'
+      ]"
+    >
+      <!-- sidebar logo -->
+      <a
+        routerLink="."
+        [ngClass]="[
+          'flex h-10 items-center min-w-full',
+          isSidebarCollapsed() ? 'aspect-square' : ''
+        ]"
+      >
+        <img
+          alt="DashyNg Logo"
+          src="/logo.png"
+          class="aspect-square h-full truncate rounded-full bg-muted object-cover object-center italic text-muted-foreground"
+        />
+        <p
+          [ngClass]="[
+            'ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent',
+            isSidebarCollapsed() ? 'hidden' : ''
+          ]"
+        >
+          DashyNg
+        </p>
+      </a>
+      <!-- sidebar nav links -->
+      <ul class="mt-16 flex min-w-full flex-col gap-y-4">
+        @for(link of links; track link.to) {
+        <li>
+          <a
+            [ngClass]="[
+              'grid gap-0 grid-cols-[auto_1fr] h-10 justify-items-start p-2 text-muted-foreground p-button p-button-secondary p-button-text',
+              isSidebarCollapsed() ? 'aspect-square justify-items-center' : ''
+            ]"
+            [routerLinkActiveOptions]="{ exact: !!link.exact }"
+            [routerLink]="link.to"
+            routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
+            ariaCurrentWhenActive="page"
+          >
+            <lucide-icon [name]="link.icon" />
+            <p [ngClass]="['ml-4', isSidebarCollapsed() ? 'hidden' : '']">
+              {{ link.label }}
+            </p>
+          </a>
+        </li>
+        }
+      </ul>
+
+      <!-- logout -->
+      <button
+        pButton
+        pRipple
+        severity="danger"
+        text
+        [ngClass]="[
+          'flex h-10 items-center min-w-full mt-auto justify-start',
+          isSidebarCollapsed() ? 'aspect-square justify-center' : ''
+        ]"
+        (click)="navigateToHome()"
+      >
+        <lucide-icon [name]="LogOutIcon" pButtonIcon />
+        <span pButtonLabel [ngClass]="[isSidebarCollapsed() ? 'hidden' : '']"
+          >Logout</span
+        >
+      </button>
+    </div>
+  </aside>
+  <main class="dashboard-main">
+    <router-outlet />
+  </main>
+  <footer class="dashboard-footer py-4 pt-8">
+    <div class="flex h-16 items-center justify-center bg-muted rounded-xl">
+      <p class="text-muted-foreground">
+        Built by&nbsp;
+        <a
+          href="https://x.com/gybex_enock"
+          class="text-foreground underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GyBex
+        </a>
+      </p>
+    </div>
+  </footer>
+</div>
