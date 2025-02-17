@@ -1,1 +1,37 @@
-<p>dashboard-index works!</p>
+@let task = {total: 10, completed: 5};
+
+<div
+  class="grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] gap-4"
+>
+  <div
+    class="relative aspect-video w-full overflow-hidden rounded-md border border-border bg-bg before:absolute before:-left-1/2 before:-top-1/2 before:z-10 before:size-full before:rounded-full before:bg-primary/15 before:blur-3xl before:content-['']"
+  >
+    <div
+      class="relative z-20 flex size-full flex-col items-center justify-center text-center"
+    >
+      <lucide-icon [name]="ListTodoIcon" class="size-9 text-muted-foreground" />
+
+      <p class="mt-1 text-xl md:text-2xl">All Todos</p>
+      <p class="mt-4 text-4xl font-medium md:text-6xl md:font-semibold">
+        {{ task.total }}
+      </p>
+    </div>
+  </div>
+  <div
+    class="relative aspect-video w-full overflow-hidden rounded-md border bg-bg before:absolute before:-left-1/2 before:-top-1/2 before:z-10 before:size-full before:rounded-full before:bg-primary/15 before:blur-3xl before:content-['']"
+  >
+    <div
+      class="relative z-20 flex size-full flex-col items-center justify-center text-center"
+    >
+      <lucide-icon
+        [name]="ListChecksIcon"
+        class="size-9 text-muted-foreground"
+      />
+
+      <p class="mt-1 text-xl md:text-2xl">Completed Todos</p>
+      <p class="mt-4 text-4xl font-medium md:text-6xl md:font-semibold">
+        {{ task.completed }}
+      </p>
+    </div>
+  </div>
+</div>
