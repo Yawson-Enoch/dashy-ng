@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthStore } from '@app/shared/auth-store';
+import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { TasksStore } from '@app/shared/tasks-store';
 import { LucideAngularModule, Pencil, Plus, Trash } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
@@ -31,6 +32,7 @@ interface TaskForm {
     FormsModule,
     Dialog,
     InputTextModule,
+    InputTrimDirective,
   ],
   templateUrl: './dashboard-tasks.component.html',
 })

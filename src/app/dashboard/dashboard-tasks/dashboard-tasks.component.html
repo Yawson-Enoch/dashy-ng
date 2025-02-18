@@ -68,6 +68,7 @@
               autocomplete="off"
               placeholder="Enter title"
               formControlName="title"
+              appInputTrim
             />
             @if(title.invalid && (title.dirty || title.touched)){
             <p class="text-(--p-red-400)">
@@ -84,6 +85,7 @@
               autocomplete="off"
               placeholder="Enter description"
               formControlName="description"
+              appInputTrim
             />
             @if(description.invalid && (description.dirty ||
             description.touched)){
