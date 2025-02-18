@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { TasksStore } from '@app/shared/tasks-store';
+import { TasksStore } from '@app/core/tasks-store';
 import { ListChecks, ListTodo, LucideAngularModule } from 'lucide-angular';
 
 @Component({

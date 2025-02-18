@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { AuthStore } from '@app/shared/auth-store';
+import { AuthStore } from '@app/core/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { NgOptimizedImage } from '@angular/common';
 import { injectQueryParams } from 'ngxtension/inject-query-params';

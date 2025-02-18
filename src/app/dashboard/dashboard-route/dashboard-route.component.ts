@@ -20,7 +20,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { DrawerModule } from 'primeng/drawer';
-import { AuthStore } from '@app/shared/auth-store';
+import { AuthStore } from '@app/core/auth-store';
 
 @Component({
   selector: 'app-dashboard-route',

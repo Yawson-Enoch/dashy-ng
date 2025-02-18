@@ -7,9 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthStore } from '@app/shared/auth-store';
+import { AuthStore } from '@app/core/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
-import { TasksStore } from '@app/shared/tasks-store';
+import { TasksStore } from '@app/core/tasks-store';
 import { LucideAngularModule, Pencil, Plus, Trash } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
