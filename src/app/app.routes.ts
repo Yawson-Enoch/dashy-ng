@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { dashboardRouteGuard } from './core/dashboard-route.guard';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,7 @@ export const routes: Routes = [
       import('./dashboard/dashboard-route/dashboard-route.component').then(
         (c) => c.DashboardRouteComponent
       ),
+    canActivateChild: [dashboardRouteGuard],
     children: [
       {
         path: '',

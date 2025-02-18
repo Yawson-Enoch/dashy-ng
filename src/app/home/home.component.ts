@@ -12,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { AuthStore } from '@app/shared/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { NgOptimizedImage } from '@angular/common';
+import { injectQueryParams } from 'ngxtension/inject-query-params';
 
 @Component({
   selector: 'app-home',
@@ -45,6 +46,8 @@ export class HomeComponent {
     name: this.name,
   });
 
+  redirectParam = injectQueryParams('redirect');
+
   submitProfile() {
     if (this.profileFormGroup.invalid) {
       /* trigger errors on submit
@@ -54,7 +57,7 @@ export class HomeComponent {
       return;
     }
     this.login(this.profileFormGroup.value.name!);
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl(this.redirectParam() || '/dashboard');
     this.profileFormGroup.reset();
   }
 }

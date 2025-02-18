@@ -24,6 +24,7 @@
     "@tailwindcss/postcss": "^4.0.6",
     "lucide-angular": "^0.475.0",
     "ngrx-immer": "^3.0.0",
+    "ngxtension": "4.3.2",
     "postcss": "^8.5.2",
     "primeng": "^19.0.6",
     "rxjs": "~7.8.0",
