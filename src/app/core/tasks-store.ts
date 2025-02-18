@@ -1,26 +1,25 @@
-import { withStorage } from '@larscom/ngrx-signals-storage';
 import { computed } from '@angular/core';
+import { withStorage } from '@larscom/ngrx-signals-storage';
 import {
   signalStore,
   withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
-
 import { immerPatchState } from 'ngrx-immer/signals';
 import { v4 as uuidv4 } from 'uuid';
 
-type Task = {
+interface Task {
   id: string;
   title: string;
   description?: string;
   isEditing: boolean;
   isCompleted: boolean;
-};
+}
 
-type TasksState = {
+interface TasksState {
   tasks: Task[];
-};
+}
 
 const initialState: TasksState = {
   tasks: [],
@@ -33,7 +32,7 @@ export const TasksStore = signalStore(
     editDetails: computed(() => store.tasks().find((task) => task.isEditing)),
     totalTasks: computed(() => store.tasks().length),
     totalCompletedTasks: computed(
-      () => store.tasks().filter((task) => task.isCompleted).length
+      () => store.tasks().filter((task) => task.isCompleted).length,
     ),
   })),
   withMethods((store) => ({
@@ -86,5 +85,5 @@ export const TasksStore = signalStore(
       });
     },
   })),
-  withStorage('TASKS', localStorage)
+  withStorage('TASKS', localStorage),
 );

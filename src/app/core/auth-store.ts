@@ -1,5 +1,5 @@
-import { withStorage } from '@larscom/ngrx-signals-storage';
 import { computed } from '@angular/core';
+import { withStorage } from '@larscom/ngrx-signals-storage';
 import {
   patchState,
   signalStore,
@@ -8,9 +8,9 @@ import {
   withState,
 } from '@ngrx/signals';
 
-type AuthState = {
+interface AuthState {
   username: string;
-};
+}
 
 const initialState: AuthState = {
   username: '',
@@ -30,5 +30,5 @@ export const AuthStore = signalStore(
       patchState(store, () => ({ username: '' }));
     },
   })),
-  withStorage('AUTH', localStorage)
+  withStorage('AUTH', localStorage),
 );

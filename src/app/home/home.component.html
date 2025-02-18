@@ -1,91 +1,95 @@
 <div class="grid min-h-dvh md:grid-cols-2">
   <div
-    class="relative before:absolute before:left-0 before:top-[-450px] before:-z-10 before:h-[1000px] before:w-[100px] before:rounded-full before:bg-primary/15 before:blur-3xl before:content-[''] max-md:hidden before:-rotate-50"
+    class="before:bg-primary/15 relative before:absolute before:top-[-450px] before:left-0 before:-z-10 before:h-[1000px] before:w-[100px] before:-rotate-50 before:rounded-full before:blur-3xl before:content-[''] max-md:hidden"
   >
     <div
-      class="container flex size-full flex-col items-center justify-center text-center relative"
+      class="relative container flex size-full flex-col items-center justify-center text-center"
     >
-      <a routerLink="/" class="size-44 lg:size-64 inline-block relative">
+      <a routerLink="/" class="relative inline-block size-44 lg:size-64">
         <img ngSrc="/logo.png" alt="DashyNg Logo" fill priority />
       </a>
       <h1
-        class="mt-8 w-fit bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent leading-normal"
+        class="from-foreground to-muted-foreground mt-8 w-fit bg-gradient-to-r bg-clip-text leading-normal text-transparent"
       >
         DashyNg
       </h1>
-      <p class="mt-2 text-muted-foreground">
+      <p class="text-muted-foreground mt-2">
         A simple tool to keep tasks organized.
       </p>
     </div>
   </div>
 
   <div
-    class="container flex flex-col items-center justify-center md:bg-surface1 dark:md:bg-muted"
+    class="md:bg-surface1 dark:md:bg-muted container flex flex-col items-center justify-center"
   >
     <h2>Welcome to DashyNg</h2>
 
     @if (loggedIn()) {
-    <div class="mt-8 gap-y-6 grid">
-      <p class="text-center text-muted-foreground">
-        Logged in as
-        <span class="font-semibold text-foreground"> {{ username() }}</span>
-      </p>
+      <div class="mt-8 grid gap-y-6">
+        <p class="text-muted-foreground text-center">
+          Logged in as
+          <span class="text-foreground font-semibold"> {{ username() }}</span>
+        </p>
 
-      <div
-        class="mx-auto md:grid w-full md:grid-cols-2 md:gap-x-4 flex flex-col-reverse gap-y-4"
+        <div
+          class="mx-auto flex w-full flex-col-reverse gap-y-4 md:grid md:grid-cols-2 md:gap-x-4"
+        >
+          <button
+            pButton
+            severity="contrast"
+            class="p-button-outlined"
+            (click)="logout()"
+          >
+            <span pButtonLabel>Logout</span>
+          </button>
+          <a routerLink="/dashboard" class="p-button btn bg-primary"
+            >Go to dashboard</a
+          >
+        </div>
+      </div>
+    } @else {
+      <form
+        [formGroup]="profileFormGroup"
+        class="mx-auto mt-8 grid w-full max-w-72 gap-y-6"
+        (ngSubmit)="submitProfile()"
       >
+        <div class="grid gap-y-1">
+          <p-floatlabel variant="on">
+            <input
+              appInputTrim
+              pInputText
+              id="name"
+              type="text"
+              formControlName="name"
+              autocomplete="off"
+              class="w-full"
+            />
+            <label for="name">Enter your name</label>
+          </p-floatlabel>
+          @if (name.invalid && (name.dirty || name.touched)) {
+            <p class="text-(--p-red-400)">
+              @if (name.hasError('required')) {
+                Name is required
+              }
+              @if (name.hasError('minlength')) {
+                Name must be at least
+                {{ name.errors!['minlength'].requiredLength }}
+                characters long
+              }
+            </p>
+          }
+        </div>
         <button
           pButton
-          severity="contrast"
-          class="p-button-outlined"
-          (click)="logout()"
+          fluid
+          [disabled]="
+            profileFormGroup.invalid &&
+            (profileFormGroup.dirty || profileFormGroup.touched)
+          "
         >
-          <span pButtonLabel>Logout</span>
+          <span pButtonLabel>Login</span>
         </button>
-        <a routerLink="/dashboard" class="p-button btn bg-primary"
-          >Go to dashboard</a
-        >
-      </div>
-    </div>
-    } @else {
-    <form
-      [formGroup]="profileFormGroup"
-      class="mx-auto mt-8 w-full max-w-72 gap-y-6 grid"
-      (ngSubmit)="submitProfile()"
-    >
-      <div class="grid gap-y-1">
-        <p-floatlabel variant="on">
-          <input
-            appInputTrim
-            pInputText
-            id="name"
-            type="text"
-            formControlName="name"
-            autocomplete="off"
-            class="w-full"
-          />
-          <label for="name">Enter your name</label>
-        </p-floatlabel>
-        @if(name.invalid && (name.dirty || name.touched)){
-        <p class="text-(--p-red-400)">
-          @if(name.hasError('required')){ Name is required }
-          @if(name.hasError('minlength')){ Name must be at least
-          {{ name.errors!["minlength"].requiredLength }}
-          characters long }
-        </p>
-        }
-      </div>
-      <button
-        pButton
-        fluid
-        [disabled]="
-          profileFormGroup.invalid &&
-          (profileFormGroup.dirty || profileFormGroup.touched)
-        "
-      >
-        <span pButtonLabel>Login</span>
-      </button>
-    </form>
+      </form>
     }
   </div>
 </div>

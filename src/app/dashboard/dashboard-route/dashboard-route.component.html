@@ -1,9 +1,9 @@
 @let hideText = isSidebarCollapsed() ? 'hidden' : '';
 
 <div class="dashboard-container min-h-dvh pr-4 max-lg:pl-4">
-  <header class="dashboard-header sticky top-0 py-4 pb-8 z-30">
+  <header class="dashboard-header sticky top-0 z-30 py-4 pb-8">
     <div
-      class="flex h-16 items-center justify-between rounded-xl px-4 bg-muted"
+      class="bg-muted flex h-16 items-center justify-between rounded-xl px-4"
     >
       <!-- mobile nav toggler -->
       <div class="card flex justify-center lg:hidden">
@@ -11,50 +11,50 @@
           <ng-template #header>
             <a
               routerLink="."
-              class="flex h-10 items-center w-fit"
+              class="flex h-10 w-fit items-center"
               (click)="toggleDrawer()"
             >
               <div
-                class="relative aspect-square h-full rounded-full overflow-hidden"
+                class="relative aspect-square h-full overflow-hidden rounded-full"
               >
                 <img
                   alt="DashyNg Logo"
                   ngSrc="/logo.png"
-                  class="truncate bg-muted object-cover object-center italic text-muted-foreground"
+                  class="bg-muted text-muted-foreground truncate object-cover object-center italic"
                   fill
                 />
               </div>
               <p
-                class="ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent"
+                class="from-foreground to-muted-foreground ml-4 bg-gradient-to-r bg-clip-text text-xl font-semibold text-transparent"
               >
                 DashyNg
               </p>
             </a>
           </ng-template>
           <ul class="mt-8 flex min-w-full flex-col gap-y-4">
-            @for(link of links; track link.to) {
-            <li>
-              <a
-                class="grid gap-0 grid-cols-[auto_1fr] h-10 justify-items-start p-2 text-muted-foreground p-button p-button-secondary p-button-text"
-                [routerLinkActiveOptions]="{ exact: !!link.exact }"
-                [routerLink]="link.to"
-                routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
-                ariaCurrentWhenActive="page"
-                (click)="toggleDrawer()"
-              >
-                <lucide-icon [name]="link.icon" />
-                <p class="ml-4">
-                  {{ link.label }}
-                </p>
-              </a>
-            </li>
+            @for (link of links; track link.to) {
+              <li>
+                <a
+                  class="text-muted-foreground p-button p-button-secondary p-button-text grid h-10 grid-cols-[auto_1fr] justify-items-start gap-0 p-2"
+                  [routerLinkActiveOptions]="{ exact: !!link.exact }"
+                  [routerLink]="link.to"
+                  routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
+                  ariaCurrentWhenActive="page"
+                  (click)="toggleDrawer()"
+                >
+                  <lucide-icon [name]="link.icon" />
+                  <p class="ml-4">
+                    {{ link.label }}
+                  </p>
+                </a>
+              </li>
             }
           </ul>
           <ng-template #footer>
             <button
               pButton
               label="Logout"
-              class="w-full justify-start text-muted-foreground gap-x-4"
+              class="text-muted-foreground w-full justify-start gap-x-4"
               text
               (click)="logout(true)"
             >
@@ -100,14 +100,16 @@
           />
         </p-button>
         <p-popover #op styleClass="after:hidden before:hidden">
-          <ul class="flex flex-col min-w-28">
-            @for(theme of themes; track theme){
-            <li
-              class="flex items-center gap-2 px-3 py-2 hover:bg-emphasis cursor-pointer rounded-border"
-              (click)="updateTheme(theme)"
-            >
-              {{ theme }}
-            </li>
+          <ul class="flex min-w-28 flex-col">
+            @for (theme of themes; track theme) {
+              <li
+                class="hover:bg-emphasis rounded-border flex cursor-pointer items-center gap-2 px-3 py-2"
+                (click)="updateTheme(theme)"
+                (keypress)="updateTheme(theme)"
+                tabindex="0"
+              >
+                {{ theme }}
+              </li>
             }
           </ul>
         </p-popover>
@@ -119,31 +121,31 @@
   >
     <div
       [ngClass]="[
-        'flex h-full flex-col items-center rounded-xl p-4 transition-[width] duration-300 ease-in-out bg-muted',
-        isSidebarCollapsed() ? 'w-16' : 'w-60'
+        'bg-muted flex h-full flex-col items-center rounded-xl p-4 transition-[width] duration-300 ease-in-out',
+        isSidebarCollapsed() ? 'w-16' : 'w-60',
       ]"
     >
       <!-- sidebar logo -->
       <a
         routerLink="."
         [ngClass]="[
-          'flex h-10 items-center min-w-full',
-          isSidebarCollapsed() ? 'aspect-square' : ''
+          'flex h-10 min-w-full items-center',
+          isSidebarCollapsed() ? 'aspect-square' : '',
         ]"
       >
-        <div class="relative aspect-square h-full rounded-full overflow-hidden">
+        <div class="relative aspect-square h-full overflow-hidden rounded-full">
           <img
             alt="DashyNg Logo"
             ngSrc="/logo.png"
-            class="truncate bg-muted object-cover object-center italic text-muted-foreground"
+            class="bg-muted text-muted-foreground truncate object-cover object-center italic"
             fill
             priority
           />
         </div>
         <p
           [ngClass]="[
-            'ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent',
-            hideText
+            'from-foreground to-muted-foreground ml-4 bg-gradient-to-r bg-clip-text text-xl font-semibold text-transparent',
+            hideText,
           ]"
         >
           DashyNg
@@ -151,24 +153,26 @@
       </a>
       <!-- sidebar nav links -->
       <ul class="mt-16 flex min-w-full flex-col gap-y-4">
-        @for(link of links; track link.to) {
-        <li>
-          <a
-            [ngClass]="[
-              'grid gap-0 grid-cols-[auto_1fr] h-10 justify-items-start p-2 text-muted-foreground p-button p-button-secondary p-button-text',
-              isSidebarCollapsed() ? 'aspect-square justify-items-center' : ''
-            ]"
-            [routerLinkActiveOptions]="{ exact: !!link.exact }"
-            [routerLink]="link.to"
-            routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
-            ariaCurrentWhenActive="page"
-          >
-            <lucide-icon [name]="link.icon" />
-            <p [ngClass]="['ml-4', hideText]">
-              {{ link.label }}
-            </p>
-          </a>
-        </li>
+        @for (link of links; track link.to) {
+          <li>
+            <a
+              [ngClass]="[
+                'text-muted-foreground p-button p-button-secondary p-button-text grid h-10 grid-cols-[auto_1fr] justify-items-start gap-0 p-2',
+                isSidebarCollapsed()
+                  ? 'aspect-square justify-items-center'
+                  : '',
+              ]"
+              [routerLinkActiveOptions]="{ exact: !!link.exact }"
+              [routerLink]="link.to"
+              routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
+              ariaCurrentWhenActive="page"
+            >
+              <lucide-icon [name]="link.icon" />
+              <p [ngClass]="['ml-4', hideText]">
+                {{ link.label }}
+              </p>
+            </a>
+          </li>
         }
       </ul>
 
@@ -178,8 +182,8 @@
         pRipple
         text
         [ngClass]="[
-          'flex h-10 items-center min-w-full mt-auto justify-start text-muted-foreground',
-          isSidebarCollapsed() ? 'aspect-square justify-center' : ''
+          'text-muted-foreground mt-auto flex h-10 min-w-full items-center justify-start',
+          isSidebarCollapsed() ? 'aspect-square justify-center' : '',
         ]"
         (click)="logout()"
       >
@@ -192,7 +196,7 @@
     <router-outlet />
   </main>
   <footer class="dashboard-footer py-4 pt-8">
-    <div class="flex h-16 items-center justify-center bg-muted rounded-xl">
+    <div class="bg-muted flex h-16 items-center justify-center rounded-xl">
       <p class="text-muted-foreground">
         Built by&nbsp;
         <a

@@ -6,6 +6,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
+import { AuthStore } from '@app/core/auth-store';
 import { ThemeService } from '@app/core/theme.service';
 import {
   Gauge,
@@ -18,9 +19,8 @@ import {
   Sun,
 } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
-import { Popover, PopoverModule } from 'primeng/popover';
 import { DrawerModule } from 'primeng/drawer';
-import { AuthStore } from '@app/core/auth-store';
+import { Popover, PopoverModule } from 'primeng/popover';
 
 @Component({
   selector: 'app-dashboard-route',

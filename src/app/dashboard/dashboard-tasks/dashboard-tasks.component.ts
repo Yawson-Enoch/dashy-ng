@@ -8,8 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthStore } from '@app/core/auth-store';
-import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { TasksStore } from '@app/core/tasks-store';
+import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { LucideAngularModule, Pencil, Plus, Trash } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
@@ -42,7 +42,7 @@ export class DashboardTasksComponent {
   username = this.authStore.username;
 
   /* handle primeng dialog state */
-  dialogVisible: boolean = false;
+  dialogVisible = false;
 
   showDialog() {
     this.dialogVisible = true;
@@ -105,7 +105,7 @@ export class DashboardTasksComponent {
       this.tasksStore.updateTask(
         this.editDetails()!.id,
         values.title!,
-        values.description!
+        values.description!,
       );
     } else {
       this.tasksStore.addTask(values.title!, values.description!);

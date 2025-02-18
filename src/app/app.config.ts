@@ -5,19 +5,18 @@ import {
   provideAppInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideRouter,
   RouterStateSnapshot,
   TitleStrategy,
 } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { providePrimeNG } from 'primeng/config';
-
-import { routes } from './app.routes';
-import { Title } from '@angular/platform-browser';
-import { ThemeService } from './core/theme.service';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
+import { providePrimeNG } from 'primeng/config';
+import { routes } from './app.routes';
+import { ThemeService } from './core/theme.service';
 
 /* title template */
 @Injectable({ providedIn: 'root' })

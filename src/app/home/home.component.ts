@@ -1,18 +1,18 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { Router, RouterLink } from '@angular/router';
 import { AuthStore } from '@app/core/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
-import { NgOptimizedImage } from '@angular/common';
 import { injectQueryParams } from 'ngxtension/inject-query-params';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-home',

@@ -21,7 +21,7 @@ export class InputTrimDirective {
     valueAccessor.registerOnChange = (fn: (_: unknown) => void) => {
       return original.call(valueAccessor, (value: unknown) => {
         return fn(
-          typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : value
+          typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : value,
         );
       });
     };

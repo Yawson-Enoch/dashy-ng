@@ -1,45 +1,45 @@
-<div class="container relative">
+<div class="relative container">
   <p class="text-xl md:text-2xl">Hey, {{ username() }}</p>
 
-  @if(tasks().length === 0){
-  <p class="mt-4 max-w-screen-md md:mt-8">You are free today!</p>
+  @if (tasks().length === 0) {
+    <p class="mt-4 max-w-screen-md md:mt-8">You are free today!</p>
   } @else {
-  <ul class="mt-4 max-w-screen-md gap-y-4 md:mt-8 grid">
-    @for(task of tasks(); track task.title){
-    <li
-      class="grid grid-cols-[auto_1fr_auto] items-center gap-x-4 rounded-xl bg-muted/65 p-4"
-    >
-      <p-checkbox
-        [ngModel]="task.isCompleted"
-        [binary]="true"
-        (onChange)="toggleCompleted(task.id)"
-      />
-
-      <p [ngClass]="['truncate', task.isCompleted ? 'line-through' : '']">
-        {{ task.title }}
-      </p>
-
-      <div class="group flex items-center gap-x-2">
-        <p-button
-          type="button"
-          icon="true"
-          variant="text"
-          (onClick)="deleteTask(task.id)"
+    <ul class="mt-4 grid max-w-screen-md gap-y-4 md:mt-8">
+      @for (task of tasks(); track task.title) {
+        <li
+          class="bg-muted/65 grid grid-cols-[auto_1fr_auto] items-center gap-x-4 rounded-xl p-4"
         >
-          <lucide-icon [name]="TrashIcon" />
-        </p-button>
-        <p-button
-          type="button"
-          icon="true"
-          variant="text"
-          (onClick)="showEditForm(task.id)"
-        >
-          <lucide-icon [name]="PencilIcon" />
-        </p-button>
-      </div>
-    </li>
-    }
-  </ul>
+          <p-checkbox
+            [ngModel]="task.isCompleted"
+            [binary]="true"
+            (onChange)="toggleCompleted(task.id)"
+          />
+
+          <p [ngClass]="['truncate', task.isCompleted ? 'line-through' : '']">
+            {{ task.title }}
+          </p>
+
+          <div class="group flex items-center gap-x-2">
+            <p-button
+              type="button"
+              icon="true"
+              variant="text"
+              (onClick)="deleteTask(task.id)"
+            >
+              <lucide-icon [name]="TrashIcon" />
+            </p-button>
+            <p-button
+              type="button"
+              icon="true"
+              variant="text"
+              (onClick)="showEditForm(task.id)"
+            >
+              <lucide-icon [name]="PencilIcon" />
+            </p-button>
+          </div>
+        </li>
+      }
+    </ul>
   }
 
   <!-- task dialog form -->
@@ -47,7 +47,7 @@
     <p-button
       type="button"
       icon="true"
-      class="fixed bottom-[20vh] right-4 lg:right-[17vw]"
+      class="fixed right-4 bottom-[20vh] lg:right-[17vw]"
       (onClick)="showAddForm()"
     >
       <lucide-icon [name]="PlusIcon" />
@@ -70,12 +70,17 @@
               formControlName="title"
               appInputTrim
             />
-            @if(title.invalid && (title.dirty || title.touched)){
-            <p class="text-(--p-red-400)">
-              @if(title.hasError('required')){ Title is required }
-              @if(title.hasError('minlength')){ Title must be at least
-              {{ title.errors!["minlength"].requiredLength }} characters long }
-            </p>
+            @if (title.invalid && (title.dirty || title.touched)) {
+              <p class="text-(--p-red-400)">
+                @if (title.hasError('required')) {
+                  Title is required
+                }
+                @if (title.hasError('minlength')) {
+                  Title must be at least
+                  {{ title.errors!['minlength'].requiredLength }} characters
+                  long
+                }
+              </p>
             }
           </div>
           <div class="grid gap-y-1">
@@ -87,14 +92,16 @@
               formControlName="description"
               appInputTrim
             />
-            @if(description.invalid && (description.dirty ||
-            description.touched)){
-            <p class="text-(--p-red-400)">
-              @if(description.hasError('minlength')){ Description must be at
-              least
-              {{ description.errors!["minlength"].requiredLength }} characters
-              long }
-            </p>
+            @if (
+              description.invalid && (description.dirty || description.touched)
+            ) {
+              <p class="text-(--p-red-400)">
+                @if (description.hasError('minlength')) {
+                  Description must be at least
+                  {{ description.errors!['minlength'].requiredLength }}
+                  characters long
+                }
+              </p>
             }
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { dashboardRouteGuard } from './core/dashboard-route.guard';
-import { DashboardTasksComponent } from './dashboard/dashboard-tasks/dashboard-tasks.component';
 import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
 import { DashboardRouteComponent } from './dashboard/dashboard-route/dashboard-route.component';
+import { DashboardTasksComponent } from './dashboard/dashboard-tasks/dashboard-tasks.component';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   {
