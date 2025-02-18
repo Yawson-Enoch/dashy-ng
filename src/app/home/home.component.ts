@@ -9,8 +9,8 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTrimDirective } from '../../directives/input-trim.directive';
 import { AuthStore } from '@app/shared/auth-store';
+import { InputTrimDirective } from '@app/shared/input-trim.directive';
 
 @Component({
   selector: 'app-home',
@@ -27,13 +27,13 @@ import { AuthStore } from '@app/shared/auth-store';
 export class HomeComponent {
   router = inject(Router);
 
-  readonly store = inject(AuthStore);
+  readonly authStore = inject(AuthStore);
 
-  username = this.store.username;
-  loggedIn = this.store.loggedIn;
+  username = this.authStore.username;
+  loggedIn = this.authStore.loggedIn;
 
-  login = this.store.login;
-  logout = this.store.logout;
+  login = this.authStore.login;
+  logout = this.authStore.logout;
 
   name = new FormControl('', {
     validators: [Validators.required, Validators.minLength(2)],

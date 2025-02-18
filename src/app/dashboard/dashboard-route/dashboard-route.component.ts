@@ -6,7 +6,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { ThemeService } from '@app/services/theme.service';
+import { ThemeService } from '@app/core/theme.service';
 import {
   Gauge,
   ListTodo,
@@ -39,10 +39,10 @@ import { AuthStore } from '@app/shared/auth-store';
 export class DashboardRouteComponent {
   router = inject(Router);
 
-  readonly store = inject(AuthStore);
+  readonly authStore = inject(AuthStore);
 
   logout(dialog = false) {
-    this.store.logout();
+    this.authStore.logout();
     this.router.navigateByUrl('/');
 
     if (dialog) {
@@ -84,7 +84,7 @@ export class DashboardRouteComponent {
   resolvedTheme = this.themeService.resolvedTheme;
 
   updateTheme(theme: string) {
-    this.themeService.handleTheme(theme);
+    this.themeService.updateTheme(theme);
     this.op.hide();
   }
 

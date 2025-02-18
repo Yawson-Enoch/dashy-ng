@@ -4,7 +4,7 @@
   @if(tasks().length === 0){
   <p class="mt-4 max-w-screen-md md:mt-8">You are free today!</p>
   } @else {
-  <ul class="mt-4 max-w-screen-md space-y-4 md:mt-8">
+  <ul class="mt-4 max-w-screen-md gap-y-4 md:mt-8 grid">
     @for(task of tasks(); track task.title){
     <li
       class="grid grid-cols-[auto_1fr_auto] items-center gap-x-4 rounded-xl bg-muted/65 p-4"
@@ -60,8 +60,8 @@
       (onHide)="resetEditState()"
     >
       <form [formGroup]="taskForm" (ngSubmit)="addTask()">
-        <div class="space-y-4">
-          <div class="space-y-1">
+        <div class="grid gap-y-4">
+          <div class="grid gap-y-1">
             <input
               fluid
               pInputText
@@ -77,7 +77,7 @@
             </p>
             }
           </div>
-          <div class="space-y-1">
+          <div class="grid gap-y-1">
             <input
               fluid
               pInputText

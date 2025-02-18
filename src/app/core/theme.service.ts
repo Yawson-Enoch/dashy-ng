@@ -32,7 +32,7 @@ export class ThemeService {
     return this.theme() === 'system' ? this.getSystemTheme() : this.theme();
   });
 
-  handleTheme(value: string) {
+  updateTheme(value: string) {
     localStorage.setItem(this.storageKey, value);
     this.theme.set(value);
   }
