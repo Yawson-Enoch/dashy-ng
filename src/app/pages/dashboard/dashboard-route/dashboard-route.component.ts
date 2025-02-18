@@ -20,6 +20,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { Popover, PopoverModule } from 'primeng/popover';
 import { DrawerModule } from 'primeng/drawer';
+import { AuthStore } from '@app/shared/auth-store';
 
 @Component({
   selector: 'app-dashboard-route',
@@ -36,43 +37,65 @@ import { DrawerModule } from 'primeng/drawer';
   templateUrl: './dashboard-route.component.html',
 })
 export class DashboardRouteComponent {
+  router = inject(Router);
+
+  readonly store = inject(AuthStore);
+
+  logout(dialog = false) {
+    this.store.logout();
+    this.router.navigateByUrl('/');
+
+    if (dialog) {
+      this.toggleDrawer();
+    }
+  }
+
   isSidebarCollapsed = signal(false);
 
-  handleSidebarToggle() {
+  toggleSidebar() {
     this.isSidebarCollapsed.update((value) => !value);
   }
 
-  isDrawerOpen: boolean = false;
+  isDrawerOpen = signal(false);
+
+  toggleDrawer() {
+    this.isDrawerOpen.update((value) => !value);
+  }
 
   /* using lucide icons with standalone components
   - github.com/lucide-icons/lucide/issues/2097#issuecomment-2069657727
   */
-  protected readonly SunIcon = Sun;
-  protected readonly MoonIcon = Moon;
-  protected readonly PanelLeftCloseIcon = PanelLeftClose;
-  protected readonly PanelRightCloseIcon = PanelRightClose;
-  protected readonly GaugeIcon = Gauge;
-  protected readonly ListTodoIcon = ListTodo;
-  protected readonly LogOutIcon = LogOut;
+  SunIcon = Sun;
+  MoonIcon = Moon;
+  PanelLeftCloseIcon = PanelLeftClose;
+  PanelRightCloseIcon = PanelRightClose;
+  GaugeIcon = Gauge;
+  ListTodoIcon = ListTodo;
+  LogOutIcon = LogOut;
 
   @ViewChild('op') op!: Popover;
 
-  toggle(event: MouseEvent) {
+  togglePopover(event: MouseEvent) {
     this.op.toggle(event);
   }
 
-  private router = inject(Router);
-
-  navigateToHome() {
-    this.router.navigate(['']);
-  }
-
-  private themeService = inject(ThemeService);
+  readonly themeService = inject(ThemeService);
 
   resolvedTheme = this.themeService.resolvedTheme;
 
-  handleTheme(theme: string) {
+  updateTheme(theme: string) {
     this.themeService.handleTheme(theme);
     this.op.hide();
   }
+
+  themes = ['light', 'dark', 'system'];
+
+  links = [
+    { to: '.', label: 'Dashboard', icon: this.GaugeIcon, exact: true },
+    {
+      to: 'tasks',
+      label: 'Tasks',
+      icon: this.ListTodoIcon,
+    },
+  ];
 }

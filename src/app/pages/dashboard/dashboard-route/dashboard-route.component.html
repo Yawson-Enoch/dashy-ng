@@ -1,7 +1,4 @@
-@let themes = ['light', 'dark', 'system'];
-<!--  -->
-@let links = [ { to: '.', label: 'Dashboard', icon: GaugeIcon, exact: true }, {
-to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
+@let hideText = isSidebarCollapsed() ? 'hidden' : '';
 
 <div class="dashboard-container min-h-dvh pr-4 max-lg:pl-4">
   <header class="dashboard-header sticky top-0 py-4 pb-8 z-30">
@@ -15,7 +12,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
             <a
               routerLink="."
               class="flex h-10 items-center w-fit"
-              (click)="isDrawerOpen = false"
+              (click)="toggleDrawer()"
             >
               <img
                 alt="DashyNg Logo"
@@ -38,7 +35,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
                 [routerLink]="link.to"
                 routerLinkActive="bg-primary text-primary-foreground hover:!bg-primary hover:!text-primary-foreground"
                 ariaCurrentWhenActive="page"
-                (click)="isDrawerOpen = false"
+                (click)="toggleDrawer()"
               >
                 <lucide-icon [name]="link.icon" />
                 <p class="ml-4">
@@ -52,10 +49,9 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
             <button
               pButton
               label="Logout"
-              class="w-full justify-start"
-              severity="danger"
+              class="w-full justify-start text-muted-foreground gap-x-4"
               text
-              (click)="isDrawerOpen = false"
+              (click)="logout(true)"
             >
               <lucide-icon [name]="LogOutIcon" />
             </button>
@@ -65,7 +61,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
           type="button"
           icon="true"
           variant="text"
-          (click)="isDrawerOpen = true"
+          (onClick)="toggleDrawer()"
         >
           <lucide-icon [name]="PanelRightCloseIcon" />
         </p-button>
@@ -76,7 +72,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
         type="button"
         icon="true"
         variant="text"
-        (onClick)="handleSidebarToggle()"
+        (onClick)="toggleSidebar()"
         class="max-lg:hidden"
       >
         <lucide-icon
@@ -92,7 +88,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
           type="button"
           icon="true"
           variant="text"
-          (onClick)="toggle($event)"
+          (onClick)="togglePopover($event)"
         >
           <lucide-icon
             [name]="resolvedTheme() === 'light' ? MoonIcon : SunIcon"
@@ -103,7 +99,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
             @for(theme of themes; track theme){
             <li
               class="flex items-center gap-2 px-3 py-2 hover:bg-emphasis cursor-pointer rounded-border"
-              (click)="handleTheme(theme)"
+              (click)="updateTheme(theme)"
             >
               {{ theme }}
             </li>
@@ -138,7 +134,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
         <p
           [ngClass]="[
             'ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent',
-            isSidebarCollapsed() ? 'hidden' : ''
+            hideText
           ]"
         >
           DashyNg
@@ -159,7 +155,7 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
             ariaCurrentWhenActive="page"
           >
             <lucide-icon [name]="link.icon" />
-            <p [ngClass]="['ml-4', isSidebarCollapsed() ? 'hidden' : '']">
+            <p [ngClass]="['ml-4', hideText]">
               {{ link.label }}
             </p>
           </a>
@@ -171,18 +167,15 @@ to: 'tasks', label: 'Tasks', icon: ListTodoIcon }, ];
       <button
         pButton
         pRipple
-        severity="danger"
         text
         [ngClass]="[
-          'flex h-10 items-center min-w-full mt-auto justify-start',
+          'flex h-10 items-center min-w-full mt-auto justify-start text-muted-foreground',
           isSidebarCollapsed() ? 'aspect-square justify-center' : ''
         ]"
-        (click)="navigateToHome()"
+        (click)="logout()"
       >
         <lucide-icon [name]="LogOutIcon" pButtonIcon />
-        <span pButtonLabel [ngClass]="[isSidebarCollapsed() ? 'hidden' : '']"
-          >Logout</span
-        >
+        <span pButtonLabel [ngClass]="[hideText]">Logout</span>
       </button>
     </div>
   </aside>

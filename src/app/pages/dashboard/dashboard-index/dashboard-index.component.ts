@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TasksStore } from '@app/shared/tasks-store';
 import { ListChecks, ListTodo, LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -7,6 +8,11 @@ import { ListChecks, ListTodo, LucideAngularModule } from 'lucide-angular';
   templateUrl: './dashboard-index.component.html',
 })
 export class DashboardIndexComponent {
-  protected readonly ListTodoIcon = ListTodo;
-  protected readonly ListChecksIcon = ListChecks;
+  readonly tasksStore = inject(TasksStore);
+
+  totalTasks = this.tasksStore.totalTasks;
+  totalCompletedTasks = this.tasksStore.totalCompletedTasks;
+
+  ListTodoIcon = ListTodo;
+  ListChecksIcon = ListChecks;
 }

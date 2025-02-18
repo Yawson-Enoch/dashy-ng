@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import {
   FormControl,
@@ -10,6 +10,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTrimDirective } from '../../directives/input-trim.directive';
+import { AuthStore } from '@app/shared/auth-store';
 
 @Component({
   selector: 'app-home',
@@ -24,36 +25,34 @@ import { InputTrimDirective } from '../../directives/input-trim.directive';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  isLoggedIn = signal(false);
-  testName = signal('');
+  router = inject(Router);
 
-  username = new FormControl('', {
+  readonly store = inject(AuthStore);
+
+  username = this.store.username;
+  loggedIn = this.store.loggedIn;
+
+  login = this.store.login;
+  logout = this.store.logout;
+
+  name = new FormControl('', {
     validators: [Validators.required, Validators.minLength(2)],
     nonNullable: true,
   });
-  profileForm = new FormGroup({
-    username: this.username,
+  profileFormGroup = new FormGroup({
+    name: this.name,
   });
 
-  handleLogin() {
-    this.isLoggedIn.set(true);
-  }
-
-  handleLogout() {
-    this.isLoggedIn.set(false);
-  }
-
-  onSubmit() {
-    if (this.profileForm.invalid) {
-      /* trigger errors on submit 
+  submitProfile() {
+    if (this.profileFormGroup.invalid) {
+      /* trigger errors on submit
       - show validation errors on submit button click instead of disabling the button
       */
-      this.profileForm.markAllAsTouched();
+      this.profileFormGroup.markAllAsTouched();
       return;
     }
-    console.log(this.profileForm.value.username);
-    this.testName.set(this.profileForm.value.username || 'Guest');
-    this.handleLogin();
-    this.profileForm.reset();
+    this.login(this.profileFormGroup.value.name!);
+    this.router.navigateByUrl('/dashboard');
+    this.profileFormGroup.reset();
   }
 }

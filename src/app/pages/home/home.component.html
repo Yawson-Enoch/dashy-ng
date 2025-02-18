@@ -24,17 +24,17 @@
   >
     <h2>Welcome to DashyNg</h2>
 
-    @if (isLoggedIn()) {
+    @if (loggedIn()) {
     <div class="mt-8 space-y-6">
       <p class="text-center text-muted-foreground">
         Logged in as
-        <span class="font-semibold text-foreground"> {{ testName() }}</span>
+        <span class="font-semibold text-foreground"> {{ username() }}</span>
       </p>
 
       <div
         class="mx-auto md:grid w-full md:grid-cols-2 md:gap-x-4 flex flex-col-reverse gap-y-4"
       >
-        <button pButton severity="secondary" (click)="handleLogout()">
+        <button pButton severity="secondary" (click)="logout()">
           <span pButtonLabel>Logout</span>
         </button>
         <a routerLink="/dashboard" class="p-button btn bg-primary"
@@ -44,36 +44,38 @@
     </div>
     } @else {
     <form
-      [formGroup]="profileForm"
+      [formGroup]="profileFormGroup"
       class="mx-auto mt-8 w-full max-w-72 space-y-6"
-      (ngSubmit)="onSubmit()"
+      (ngSubmit)="submitProfile()"
     >
       <div class="space-y-1">
         <p-floatlabel variant="on">
           <input
             appInputTrim
             pInputText
-            id="username"
+            id="name"
             type="text"
-            formControlName="username"
+            formControlName="name"
             autocomplete="off"
             class="w-full"
           />
-          <label for="username">Enter your name</label>
+          <label for="name">Enter your name</label>
         </p-floatlabel>
-        @if(username.invalid && (username.dirty || username.touched)){
+        @if(name.invalid && (name.dirty || name.touched)){
         <p class="text-(--p-red-400)">
-          @if(username.hasError('required')){ Name is required }
-          @if(username.hasError('minlength')){ Name must be at least
-          {{ username.errors!["minlength"].requiredLength }} characters long }
+          @if(name.hasError('required')){ Name is required }
+          @if(name.hasError('minlength')){ Name must be at least
+          {{ name.errors!["minlength"].requiredLength }}
+          characters long }
         </p>
         }
       </div>
       <button
         pButton
-        fluid="true"
+        fluid
         [disabled]="
-          profileForm.invalid && (profileForm.dirty || profileForm.touched)
+          profileFormGroup.invalid &&
+          (profileFormGroup.dirty || profileFormGroup.touched)
         "
       >
         <span pButtonLabel>Login</span>

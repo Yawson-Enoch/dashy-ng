@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,6 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthStore } from '@app/shared/auth-store';
+import { TasksStore } from '@app/shared/tasks-store';
 import { LucideAngularModule, Pencil, Plus, Trash } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
@@ -33,22 +35,19 @@ interface TaskForm {
   templateUrl: './dashboard-tasks.component.html',
 })
 export class DashboardTasksComponent {
-  editingTask = signal(false);
+  readonly authStore = inject(AuthStore);
 
-  toggleEditingTask() {
-    this.editingTask.update((value) => !value);
-  }
-
-  /* lucide icons */
-  TrashIcon = Trash;
-  PencilIcon = Pencil;
-  PlusIcon = Plus;
+  username = this.authStore.username;
 
   /* handle primeng dialog state */
   dialogVisible: boolean = false;
 
   showDialog() {
     this.dialogVisible = true;
+  }
+
+  hideDialog() {
+    this.dialogVisible = false;
   }
 
   /* dialog form */
@@ -66,13 +65,56 @@ export class DashboardTasksComponent {
     description: this.description,
   });
 
-  submitTask() {
+  readonly tasksStore = inject(TasksStore);
+
+  tasks = this.tasksStore.tasks;
+  editDetails = this.tasksStore.editDetails;
+
+  showAddForm() {
+    this.taskForm.reset({
+      title: this.editDetails()?.title,
+      description: this.editDetails()?.description,
+    });
+    this.showDialog();
+  }
+
+  showEditForm(id: string) {
+    this.tasksStore.editTask(id);
+    this.taskForm.reset({
+      title: this.editDetails()?.title,
+      description: this.editDetails()?.description,
+    });
+    this.showDialog();
+  }
+
+  deleteTask = this.tasksStore.deleteTask;
+  toggleCompleted = this.tasksStore.toggleCompleted;
+  resetEditState = this.tasksStore.resetEditState;
+
+  addTask() {
     if (this.taskForm.invalid) {
       this.taskForm.markAllAsTouched();
       return;
     }
-    console.log(this.taskForm.value);
-    this.dialogVisible = false;
-    this.taskForm.reset();
+
+    const values = this.taskForm.value;
+
+    if (this.editDetails()) {
+      this.tasksStore.updateTask(
+        this.editDetails()!.id,
+        values.title!,
+        values.description!
+      );
+    } else {
+      this.tasksStore.addTask(values.title!, values.description!);
+      this.taskForm.reset();
+    }
+
+    this.hideDialog();
   }
+
+  /* lucide icons */
+  TrashIcon = Trash;
+  PencilIcon = Pencil;
+  PlusIcon = Plus;
 }
