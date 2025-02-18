@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import {
   Router,
@@ -33,6 +33,7 @@ import { AuthStore } from '@app/shared/auth-store';
     PopoverModule,
     DrawerModule,
     LucideAngularModule,
+    NgOptimizedImage,
   ],
   templateUrl: './dashboard-route.component.html',
 })

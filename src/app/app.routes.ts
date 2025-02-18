@@ -1,8 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { DashboardRouteComponent } from './dashboard/dashboard-route/dashboard-route.component';
-import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
-import { DashboardTasksComponent } from './dashboard/dashboard-tasks/dashboard-tasks.component';
 
 export const routes: Routes = [
   {
@@ -12,10 +9,27 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardRouteComponent,
+    loadComponent: () =>
+      import('./dashboard/dashboard-route/dashboard-route.component').then(
+        (c) => c.DashboardRouteComponent
+      ),
     children: [
-      { path: '', title: 'Dashboard', component: DashboardIndexComponent },
-      { path: 'tasks', title: 'Tasks', component: DashboardTasksComponent },
+      {
+        path: '',
+        title: 'Dashboard',
+        loadComponent: () =>
+          import('./dashboard/dashboard-index/dashboard-index.component').then(
+            (c) => c.DashboardIndexComponent
+          ),
+      },
+      {
+        path: 'tasks',
+        title: 'Tasks',
+        loadComponent: () =>
+          import('./dashboard/dashboard-tasks/dashboard-tasks.component').then(
+            (c) => c.DashboardTasksComponent
+          ),
+      },
     ],
   },
 ];

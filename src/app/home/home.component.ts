@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { AuthStore } from '@app/shared/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ import { InputTrimDirective } from '@app/shared/input-trim.directive';
     InputTextModule,
     FloatLabelModule,
     InputTrimDirective,
+    NgOptimizedImage,
   ],
   templateUrl: './home.component.html',
 })

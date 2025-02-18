@@ -14,11 +14,16 @@
               class="flex h-10 items-center w-fit"
               (click)="toggleDrawer()"
             >
-              <img
-                alt="DashyNg Logo"
-                src="/logo.png"
-                class="aspect-square h-full truncate rounded-full bg-muted object-cover object-center italic text-muted-foreground"
-              />
+              <div
+                class="relative aspect-square h-full rounded-full overflow-hidden"
+              >
+                <img
+                  alt="DashyNg Logo"
+                  ngSrc="/logo.png"
+                  class="truncate bg-muted object-cover object-center italic text-muted-foreground"
+                  fill
+                />
+              </div>
               <p
                 class="ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent"
               >
@@ -126,11 +131,15 @@
           isSidebarCollapsed() ? 'aspect-square' : ''
         ]"
       >
-        <img
-          alt="DashyNg Logo"
-          src="/logo.png"
-          class="aspect-square h-full truncate rounded-full bg-muted object-cover object-center italic text-muted-foreground"
-        />
+        <div class="relative aspect-square h-full rounded-full overflow-hidden">
+          <img
+            alt="DashyNg Logo"
+            ngSrc="/logo.png"
+            class="truncate bg-muted object-cover object-center italic text-muted-foreground"
+            fill
+            priority
+          />
+        </div>
         <p
           [ngClass]="[
             'ml-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-xl font-semibold text-transparent',
