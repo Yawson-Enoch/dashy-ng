@@ -5,7 +5,7 @@ import { computed, effect, Injectable, signal } from '@angular/core';
 })
 export class ThemeService {
   private readonly storageKey = 'theme';
-  private readonly defaultTheme = 'light';
+  private readonly defaultTheme = 'system';
   private readonly MEDIA = '(prefers-color-scheme: dark)';
 
   private getStoredTheme() {

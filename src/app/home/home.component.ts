@@ -11,8 +11,8 @@ import { AuthStore } from '@app/core/auth-store';
 import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { injectQueryParams } from 'ngxtension/inject-query-params';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    FloatLabelModule,
+    AutoFocusModule,
     InputTrimDirective,
     NgOptimizedImage,
   ],

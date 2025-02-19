@@ -54,18 +54,17 @@
         (ngSubmit)="submitProfile()"
       >
         <div class="grid gap-y-1">
-          <p-floatlabel variant="on">
-            <input
-              appInputTrim
-              pInputText
-              id="name"
-              type="text"
-              formControlName="name"
-              autocomplete="off"
-              class="w-full"
-            />
-            <label for="name">Enter your name</label>
-          </p-floatlabel>
+          <input
+            appInputTrim
+            pInputText
+            [pAutoFocus]="true"
+            id="name"
+            type="text"
+            formControlName="name"
+            autocomplete="off"
+            class="w-full"
+            placeholder="Enter your name"
+          />
           @if (name.invalid && (name.dirty || name.touched)) {
             <p class="text-(--p-red-400)">
               @if (name.hasError('required')) {

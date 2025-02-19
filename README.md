@@ -19,9 +19,3 @@ pnpm dev
 ```sh
 pnpm build
 ```
-
-### Compile and Hot-Reload for Development(build mode)
-
-```sh
-ng serve --configuration production
-```
