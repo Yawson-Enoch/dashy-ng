@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
-import { AuthStore } from '@app/core/auth-store';
+
+import { AuthStore } from '@/app/core/auth-store';
 
 export const dashboardRouteGuard: CanActivateChildFn = (_childRoute, state) => {
   const authService = inject(AuthStore);

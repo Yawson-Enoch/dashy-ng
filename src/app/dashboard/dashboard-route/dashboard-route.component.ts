@@ -6,8 +6,6 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { AuthStore } from '@app/core/auth-store';
-import { ThemeService } from '@app/core/theme.service';
 import {
   Gauge,
   ListTodo,
@@ -21,6 +19,9 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { Popover, PopoverModule } from 'primeng/popover';
+
+import { AuthStore } from '@/app/core/auth-store';
+import { ThemeService } from '@/app/core/theme.service';
 
 @Component({
   selector: 'app-dashboard-route',

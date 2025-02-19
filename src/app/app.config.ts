@@ -15,6 +15,7 @@ import {
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
+
 import { routes } from './app.routes';
 import { ThemeService } from './core/theme.service';
 

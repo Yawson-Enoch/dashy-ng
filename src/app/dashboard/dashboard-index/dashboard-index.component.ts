@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { TasksStore } from '@app/core/tasks-store';
 import { ListChecks, ListTodo, LucideAngularModule } from 'lucide-angular';
+
+import { TasksStore } from '@/app/core/tasks-store';
 
 @Component({
   selector: 'app-dashboard-index',

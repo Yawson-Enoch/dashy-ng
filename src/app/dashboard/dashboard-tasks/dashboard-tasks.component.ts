@@ -7,14 +7,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthStore } from '@app/core/auth-store';
-import { TasksStore } from '@app/core/tasks-store';
-import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { LucideAngularModule, Pencil, Plus, Trash } from 'lucide-angular';
 import { ButtonModule } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+
+import { AuthStore } from '@/app/core/auth-store';
+import { TasksStore } from '@/app/core/tasks-store';
+import { InputTrimDirective } from '@/app/shared/input-trim.directive';
 
 interface TaskForm {
   title: FormControl<string>;

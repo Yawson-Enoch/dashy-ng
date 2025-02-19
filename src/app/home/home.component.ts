@@ -7,12 +7,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthStore } from '@app/core/auth-store';
-import { InputTrimDirective } from '@app/shared/input-trim.directive';
 import { injectQueryParams } from 'ngxtension/inject-query-params';
+import { AutoFocusModule } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { AutoFocusModule } from 'primeng/autofocus';
+
+import { AuthStore } from '@/app/core/auth-store';
+import { InputTrimDirective } from '@/app/shared/input-trim.directive';
 
 @Component({
   selector: 'app-home',

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { dashboardRouteGuard } from './core/dashboard-route.guard';
 import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
 import { DashboardRouteComponent } from './dashboard/dashboard-route/dashboard-route.component';
