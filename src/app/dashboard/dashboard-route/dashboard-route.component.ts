@@ -1,5 +1,5 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, inject, signal, ViewChild } from '@angular/core';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import {
   Router,
   RouterLink,

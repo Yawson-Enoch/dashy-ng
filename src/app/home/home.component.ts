@@ -1,5 +1,5 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import {
   FormControl,
   FormGroup,

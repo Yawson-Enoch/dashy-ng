@@ -16,6 +16,7 @@ module.exports = {
     'decorators-legacy',
   ],
   importOrder: [
+    '^(@angular/core)$',
     '^(@angular/(.*)$)',
     '<THIRD_PARTY_MODULES>',
     '',

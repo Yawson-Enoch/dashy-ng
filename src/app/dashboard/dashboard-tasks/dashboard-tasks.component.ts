@@ -1,5 +1,5 @@
-import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
